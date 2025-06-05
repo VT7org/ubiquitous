@@ -1,0 +1,42 @@
+#!/bin/bash
+
+# Create .env file with sample values
+cat << EOF > .env
+# Required Configuration
+
+API_ID=18136872
+API_HASH=312d861b78efcd1b02183b2ab52a83a4
+
+BOT_TOKEN=
+BOT_USERNAME=
+
+MONGO_DB_URI=
+
+STRING_SESSION=
+
+# Optional (Pre-filled Defaults)
+
+DURATION_LIMIT=17000
+SUPPORT_CHANNEL=https://t.me/BillaSpace
+SUPPORT_CHAT=https://t.me/BillaCore
+
+UPSTREAM_REPO=https://github.com/VT7org/ubiquitous-spoon
+UPSTREAM_BRANCH=main
+GIT_TOKEN=
+
+
+SPOTIFY_CLIENT_ID=1c21247d714244ddbb09925dac565aed
+SPOTIFY_CLIENT_SECRET=709e1a2969664491b58200860623ef19
+
+TG_AUDIO_FILESIZE_LIMIT=5242880000
+TG_VIDEO_FILESIZE_LIMIT=5242880000
+
+ASSISTANT_LEAVE_TIME=9000
+SONG_DOWNLOAD_DURATION=9999999
+SONG_DOWNLOAD_DURATION_LIMIT=9999999
+PLAYLIST_FETCH_LIMIT=300
+
+START_IMG_URL=https://graph.org/file/efbb051b7aad4b2ad7d37-c8e4ddd2960c91be07.jpg
+EOF
+
+echo "Sample .env file created Successfully."
