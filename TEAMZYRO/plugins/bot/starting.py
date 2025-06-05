@@ -37,7 +37,7 @@ from strings import get_string
 
 # ------------- FIXED VIDEO LOAD ---------------
 env_videos = os.getenv("NEXI_VID", "").split(",")
-NEXI_VID = [v.strip() for v in env_videos if v.strip()] or ["https://files.catbox.moe/ror8ec.MP4"]
+NEXI_VID = [v.strip() for v in env_videos if v.strip()] or ["https://files.catbox.moe/bfs46i.mp4"]
 # ---------------------------------------------
 
 
