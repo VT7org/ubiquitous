@@ -22,16 +22,16 @@ BOT_USERNAME = getenv("BOT_USERNAME" , "")
 #---------------------------------------------------------------
 #---------------------------------------------------------------
 MONGO_DB_URI = getenv("MONGO_DB_URI", "")
-DB_NAME = getenv("DB_NAME", "Zyro")
+DB_NAME = getenv("DB_NAME", "BillaPro")
 #---------------------------------------------------------------
 # ----------------------------------------------------------------
 DURATION_LIMIT_MIN = int(getenv("DURATION_LIMIT", 17000))
 # ----------------------------------------------------------------
 # ----------------------------------------------------------------
-LOGGER_ID = int(getenv("LOGGER_ID", -1002155818429))
+LOGGER_ID = int(getenv("LOGGER_ID", -1002125131058))
 # ----------------------------------------------------------------
 # ----------------------------------------------------------------
-OWNER_ID = int(getenv("OWNER_ID", 7638720582))
+OWNER_ID = int(getenv("OWNER_ID", 5960968099))
 # -----------------------------------------------------------------
 # -----------------------------------------------------------------
 # ----------------------------------------------------------------
@@ -45,7 +45,7 @@ HEROKU_API_KEY = getenv("HEROKU_API_KEY")
 # ----------------------------------------------------------------
 UPSTREAM_REPO = getenv(
     "UPSTREAM_REPO",
-    "https://github.com/MrZyro/ZyroMusic",
+    "https://github.com/VT7org/ubiquitous-spoon",
 )
 UPSTREAM_BRANCH = getenv("UPSTREAM_BRANCH", "main")
 GIT_TOKEN = getenv(
@@ -59,8 +59,8 @@ GIT_TOKEN = getenv(
 
 # ------------------------------------------------------------------------
 # -------------------------------------------------------------------------
-SUPPORT_CHANNEL = getenv("SUPPORT_CHANNEL", "https://t.me/Zyro_Network")
-SUPPORT_CHAT = getenv("SUPPORT_CHAT", "https://t.me/+HP8Ug5n1jXIyOTU9")
+SUPPORT_CHANNEL = getenv("SUPPORT_CHANNEL", "https://t.me/BillaSpace")
+SUPPORT_CHAT = getenv("SUPPORT_CHAT", "https://t.me/redzoneparadise")
 # ------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------
 
@@ -92,7 +92,7 @@ SPOTIFY_CLIENT_SECRET = getenv("SPOTIFY_CLIENT_SECRET", "709e1a2969664491b582008
 
 
 # -----------------------------------------------------------------------------------
-PLAYLIST_FETCH_LIMIT = int(getenv("PLAYLIST_FETCH_LIMIT", 25))
+PLAYLIST_FETCH_LIMIT = int(getenv("PLAYLIST_FETCH_LIMIT", 300))
 # ------------------------------------------------------------------------------------
 
 # ------------------------------------------------------------------------------------
