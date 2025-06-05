@@ -1,5 +1,6 @@
 name: 🇺🇸 English
 
+
 general_1: "<blockquote>» ʀᴇᴘʟʏ ᴛᴏ ᴀ ᴜsᴇʀ's ᴍᴇssᴀɢᴇ ᴏʀ ɢɪᴠᴇ ᴜsᴇʀɴᴀᴍᴇ/ᴜsᴇʀ ɪᴅ.</blockquote>"
 general_2: "<blockquote>» sᴏᴍᴇᴛʜɪɴɢ ᴡᴇɴᴛ ᴡʀᴏɴɢ ᴡʜɪʟᴇ ᴘʀᴏᴄᴇssɪɴɢ ʏᴏᴜʀ ǫᴜᴇʀʏ.\n\nᴇxᴄᴇᴘᴛɪᴏɴ : <code>{0}</code></blockquote>"
 general_3: "<blockquote>ʏᴏᴜ'ʀᴇ ᴀɴ ᴀɴᴏɴʏᴍᴏᴜs ᴀᴅᴍɪɴ ɪɴ ᴛʜɪs ᴄʜᴀᴛ, ʀᴇᴠᴇʀᴛ ʙᴀᴄᴋ ᴛᴏ ᴜsᴇʀ ᴀᴄᴄᴏᴜɴᴛ ғᴏʀ ᴜsɪɴɢ ᴍᴇ.</blockquote>"
@@ -181,10 +182,12 @@ lyrics_4: "<blockquote><b><u>{0} ʟʏʀɪᴄs</u></b>\n\n{1}\n\n<b>↬ ᴩᴏᴡ
 stream_1: "<b><blockquote>➲ʙɪʟʟᴀ Sᴛᴀʀᴛᴇᴅ Sᴛʀᴇᴀᴍɪɴɢ ✨</b></blockquote>\n➖➖➖➖➖➖➖➖➖➖➖\n<b>‣ Tɪᴛʟᴇ :</b> <a href={0}>{1}</a>\n<b>‣ Dᴜʀᴀᴛɪᴏɴ :</b> {2} ᴍɪɴᴜᴛᴇs\n<b>‣ Rᴇǫᴜᴇsᴛᴇᴅ ʙʏ :</b> {3}\n➖➖➖➖➖➖➖➖➖➖➖"
 stream_2: "<b><blockquote>➲ ʙɪʟʟᴀ Sᴛᴀʀᴛᴇᴅ Sᴛʀᴇᴀᴍɪɴɢ ✨</b></blockquote>\n➖➖➖➖➖➖➖➖➖➖➖\n<b>‣ Sᴛʀᴇᴀᴍ ᴛʏᴘᴇ :</b> ʟɪᴠᴇ sᴛʀᴇᴀᴍ [ᴜʀʟ]\n<b>‣ Rᴇǫᴜᴇsᴛᴇᴅ ʙʏ :</b> {0}\n➖➖➖➖➖➖➖➖➖➖➖"
 
+
 CLOSE_BUTTON: "ᴄʟᴏsᴇ"
 BACK_BUTTON: "ʙᴀᴄᴋ"
 NEXT_PAGE: "⇨"
 BACK_PAGE: "⇦"
+
 
 S_B_1: "sᴜᴍᴍᴏɴ ᴍᴇ"
 S_B_2: "sᴜᴘᴘᴏʀᴛ"
@@ -220,6 +223,7 @@ H_B_21: "ᴇxᴛʀᴀs✨"
 H_B_22: "ɪᴍᴀɢᴇ"
 H_B_23: "ᴀᴄᴛɪᴏɴ"
 H_B_24: "sᴇᴀʀᴄʜ"
+
 
 P_B_1: "ᴀᴜᴅɪᴏ"
 P_B_2: "ᴠɪᴅᴇᴏ 🎥"
