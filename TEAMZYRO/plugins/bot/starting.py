@@ -1,19 +1,22 @@
 import time
 import random
-from pyrogram import filters
-from pyrogram.enums import ChatType
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
-from youtubesearchpython.__future__ import VideosSearch
 import os
 from os import getenv
 
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, InputMediaPhoto
+from pyrogram import filters
+from pyrogram.enums import ChatType
+from pyrogram.types import (
+    InlineKeyboardButton,
+    InlineKeyboardMarkup,
+    Message,
+    InputMediaPhoto,
+)
+from youtubesearchpython.__future__ import VideosSearch
+
 import config
 from TEAMZYRO import app
 from TEAMZYRO.misc import _boot_
 from TEAMZYRO.plugins.sudo.sudoers import sudoers_list
-from TEAMZYRO.utils.database import get_served_chats, get_served_users, get_sudoers
-from TEAMZYRO.utils import bot_sys_stats
 from TEAMZYRO.utils.database import (
     add_served_chat,
     add_served_user,
@@ -21,15 +24,22 @@ from TEAMZYRO.utils.database import (
     get_lang,
     is_banned_user,
     is_on_off,
+    get_served_chats,
+    get_served_users,
+    get_sudoers,
 )
+from TEAMZYRO.utils import bot_sys_stats
 from TEAMZYRO.utils.decorators.language import LanguageStart
 from TEAMZYRO.utils.formatters import get_readable_time
 from TEAMZYRO.utils.inline import help_pannel, private_panel, start_panel
 from config import BANNED_USERS
 from strings import get_string
 
-#--------------------------
-NEXI_VID = os.getenv("NEXI_VID", "").split(",") or ["https://files.catbox.moe/ror8ec.MP4"]
+# ------------- FIXED VIDEO LOAD ---------------
+env_videos = os.getenv("NEXI_VID", "").split(",")
+NEXI_VID = [v.strip() for v in env_videos if v.strip()] or ["https://files.catbox.moe/ror8ec.MP4"]
+# ---------------------------------------------
+
 
 @app.on_message(filters.command(["start"]) & filters.private & ~BANNED_USERS)
 @LanguageStart
