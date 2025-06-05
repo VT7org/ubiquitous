@@ -1,5 +1,6 @@
 aiofiles
 aiohttp
+packaging>=24.0
 apscheduler
 asyncio
 bard
@@ -65,7 +66,6 @@ telebot==0.0.5
 youtube_dl==2021.12.17
 git+https://github.com/TeamZyro/daxxhub.git
 pornhub-api==0.3.0
-pyrogram
 python-telegram-bot==21.1.1
 pyyaml==6.0.1
 MukeshAPI
