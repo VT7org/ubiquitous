@@ -71,7 +71,7 @@ pyyaml==6.0.1
 MukeshAPI
 youtube-search
 youtube-search-python
-https://github.com/VT7org/pyrogram-Pkg23.1.git
+git+https://github.com/VT7org/pyrogram-Pkg23.1.git
 yt-dlp
 git+https://github.com/AsmSafone/SafoneAPI
 python-telegram-bot
