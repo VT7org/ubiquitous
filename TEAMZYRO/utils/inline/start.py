@@ -29,14 +29,7 @@ def private_panel(_):
             InlineKeyboardButton(text=_["S_B_6"], url=config.SUPPORT_CHANNEL),
         ],
         [
-            InlineKeyboardButton(
-                text="GitHub Repo",  # Button ka naam
-                url="https://github.com/MrZyro/ZyroMusic"  # Yaha apna repo ka link daalna
-            ),
-        ],
-        [
             InlineKeyboardButton(text=_["S_B_4"], callback_data="settings_back_helper"),
         ],
     ]
     return buttons
-
