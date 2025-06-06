@@ -63,39 +63,39 @@ async def freefire_info(client: Client, message: Message):
         prefer_mode = prefer_mode.split('_')[-1] if prefer_mode else 'N/A'
 
         info_text = f"""
-🎮 **Free Fire Player Info** 🎮
+🎮 **Fʀᴇᴇ Fɪʀᴇ Pʟᴀʏᴇʀ Iɴғᴏ** 🎮
 
-👤 **Basic Info:**
-├─ Name: `{name}`
-├─ Level: `{level}`
-├─ EXP: `{exp}`
-├─ Region: `{region_display}`
-├─ Created: `{create_time}`
-└─ Last Login: `{last_login}`
+👤 **Bᴀsɪᴄ Iɴғᴏ:**
+├─ Nᴀᴍᴇ: `{name}`
+├─ Lᴇᴠᴇʟ: `{level}`
+├─ Exᴘ: `{exp}`
+├─ ʀᴇɢɪᴏɴ: `{region_display}`
+├─ Cʀᴇᴀᴛᴇᴅ: `{create_time}`
+└─ Lᴀsᴛ Lᴏɢɪɴ: `{last_login}`
 
-🏆 **Rank Info:**
-├─ BR Rank: `{br_rank} pts (Max: {br_max})`
-└─ CS Rank: `{cs_rank} pts (Max: {cs_max})`
+🏆 **Rᴀɴᴋ ɪɴғᴏ:**
+├─ Bʀ Rᴀɴᴋ: `{br_rank} ᴘᴛs (ᴍᴀx: {br_max})`
+└─ Cs Rᴀɴᴋ: `{cs_rank} ᴘᴛs (ᴍᴀx: {cs_max})`
 
-👕 **Equipment:**
-├─ Weapons: `{weapons}`
-└─ Outfit: `{outfits}`
+👕 **Eǫᴜɪᴘᴍᴇɴᴛ:**
+├─ Wᴇᴀᴘᴏɴs: `{weapons}`
+└─ Oᴜᴛғɪᴛ: `{outfits}`
 
-🏛️ **Guild Info:**
-├─ Name: `{guild_name}`
-├─ Level: `{guild_level}`
-└─ Members: `{guild_members}`
+🏛️ **Gᴜɪʟᴅ Iɴғᴏ:**
+├─ Nᴀᴍᴇ: `{guild_name}`
+├─ Lᴇᴠᴇʟ: `{guild_level}`
+└─ Meᴍʙᴇʀs: `{guild_members}`
 
-📝 **Social:**
-├─ Signature: `{signature}`
-└─ Preferred Mode: `{prefer_mode}`
+📝 **Sᴏᴄɪᴀʟ:**
+├─ Sɪɢɴᴀᴛᴜʀᴇ: `{signature}`
+└─ Pʀᴇғᴇʀʀᴇᴅ Mᴏᴅᴇ: `{prefer_mode}`
 
-🔗 **Profile Link:** [View in FF](https://freefiremobile.com/profile/{player_id})
+🔗 **Pʀɪғɪʟᴇ Lɪɴᴋ:** [ᴠɪᴇᴡ ɪɴ ғғ](https://freefiremobile.com/profile/{player_id})
 """
 
         buttons = InlineKeyboardMarkup([
-            [InlineKeyboardButton("🔄 Refresh", callback_data=f"refresh_ff_{player_id}_{region}")],
-            [InlineKeyboardButton("👨‍💻 Credits", url="https://t.me/sukuna_dev")]
+            [InlineKeyboardButton("ʀᴇғʀᴇsʜ", callback_data=f"refresh_ff_{player_id}_{region}")],
+            [InlineKeyboardButton("Cʀᴇᴅɪᴛs", url="https://t.me/x_ifeelram")]
         ])
 
         await message.reply_text(
@@ -105,7 +105,7 @@ async def freefire_info(client: Client, message: Message):
         )
 
     except Exception as e:
-        await message.reply_text(f"An error occurred:\n`{str(e)}`")
+        await message.reply_text(f"ᴀɴ ᴇʀʀᴏʀ ᴏᴄᴄᴜʀᴇᴅ:\n`{str(e)}`")
 
 @app.on_callback_query(filters.regex(r"^refresh_ff_(\d+)_(\w+)$"))
 async def refresh_ff_info(client, callback_query):
@@ -117,7 +117,7 @@ async def refresh_ff_info(client, callback_query):
         response = requests.get(api_url)
 
         if response.status_code != 200:
-            await callback_query.answer("Failed to refresh data", show_alert=True)
+            await callback_query.answer("Fᴀɪʟᴇᴅ ᴛᴏ ʀᴇғʀᴇsʜ ᴅᴀᴛᴀ", show_alert=True)
             return
 
         data = response.json()
@@ -131,7 +131,7 @@ async def refresh_ff_info(client, callback_query):
         old_text_lines = callback_query.message.text.splitlines()
         new_text_lines = []
         for line in old_text_lines:
-            if "Last Login:" in line:
+            if "Lᴀsᴛ Lᴏɢɪɴ:" in line:
                 new_text_lines.append(f"└─ Last Login: `{last_login}`")
             else:
                 new_text_lines.append(line)
@@ -140,7 +140,7 @@ async def refresh_ff_info(client, callback_query):
             "\n".join(new_text_lines),
             reply_markup=callback_query.message.reply_markup
         )
-        await callback_query.answer("Data refreshed!")
+        await callback_query.answer("Dᴀᴛᴀ ʀᴇғʀᴇsʜᴇᴅ!")
 
     except Exception as e:
-        await callback_query.answer(f"Error: {str(e)}", show_alert=True)
+        await callback_query.answer(f"Eʀʀᴏʀ: {str(e)}", show_alert=True)
