@@ -2,7 +2,7 @@ import asyncio
 from contextlib import suppress
 
 from pyrogram.errors import PeerIdInvalid
-from pyrogram.types import Message, ChatPriviliges 
+from pyrogram.types import Message 
 from pyrogram import Client, filters
 from pyrogram.enums import ChatMembersFilter, ChatMemberStatus, ChatType
 from pyrogram.types import (
