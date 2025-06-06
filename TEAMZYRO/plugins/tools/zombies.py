@@ -15,7 +15,7 @@ stopProcess = False
 
 # ------------------------------------------------------------------------------- #
 
-@app.on_message(filters.command(["zombies","clean"]))
+@app.on_message(filters.command(["cdel","dclean"]))
 async def remove(client, message):
   global stopProcess
   try: 
