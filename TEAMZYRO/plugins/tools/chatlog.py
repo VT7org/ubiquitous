@@ -21,7 +21,7 @@ photo = [
 @app.on_message(filters.new_chat_members, group=2)
 async def join_watcher(_, message):    
     chat = message.chat
-    link = "https://www.youtube.com/"
+    link = "https://t.me/BillaSpace"
     for member in message.new_chat_members:
         if member.id == app.id:
             count = await app.get_chat_members_count(chat.id)
@@ -35,7 +35,7 @@ async def join_watcher(_, message):
                 f"🤔 ᴀᴅᴅᴇᴅ ʙʏ: {message.from_user.mention}"
             )
             await app.send_photo(LOG_GROUP_ID, photo=random.choice(photo), caption=msg, reply_markup=InlineKeyboardMarkup([
-                [InlineKeyboardButton(f"sᴇᴇ ɢʀᴏᴜᴘ👀", url=f"{link}")]
+                [InlineKeyboardButton(f"ᴜᴘᴅᴀᴛᴇs", url=f"{link}")]
             ]))
 
 @app.on_message(filters.left_chat_member)
