@@ -246,25 +246,44 @@ async def banFunc(_, message: Message):
 @app.on_message(filters.command("unban") & ~filters.private & ~BANNED_USERS)
 @adminsOnly("can_restrict_members")
 async def unban_func(_, message: Message):
-    # we don't need reasons for unban, also, we
-    # don't need to get "text_mention" entity, because
-    # normal users won't get text_mention if the user
-    # they want to unban is not in the group.
-    reply = message.reply_to_message
     user_id = await extract_user(message)
+
     if not user_id:
         return await message.reply_text("I can't find that user.")
 
-    if reply and reply.sender_chat and reply.sender_chat != message.chat.id:
+    reply = message.reply_to_message
+    if reply and reply.sender_chat and reply.sender_chat.id != message.chat.id:
         return await message.reply_text("You cannot unban a channel")
 
-    await message.chat.unban_member(user_id)
-    umention = (await app.get_users(user_id)).mention
-    replied_message = message.reply_to_message
-    if replied_message:
-        message = replied_message
-    await message.reply_text(f"Unbanned! {umention} [ ](https://files.catbox.moe/eynjfq.mp4)\b")
+    try:
+        user = await app.get_users(user_id)
+        umention = user.mention
+    except PeerIdInvalid:
+        await message.reply_text(
+            "Error: The user ID or username is invalid or hasn't interacted with the bot yet. "
+            "Ensure the user is known to the bot."
+        )
+        return
+    except Exception as e:
+        await message.reply_text(f"Error resolving user: {str(e)}")
+        return
 
+    try:
+        await message.chat.unban_member(user_id)
+    except Exception as e:
+        await message.reply_text(f"Error unbanning user: {str(e)}")
+        return
+
+    try:
+        replied_message = message.reply_to_message
+        if replied_message:
+            message = replied_message
+        await message.reply_text(
+            f"Unbanned! {umention} [Video](https://files.catbox.moe/eynjfq.mp4)",
+            parse_mode="markdown"
+        )
+    except Exception as e:
+        await message.reply_text(f"Error sending unban message: {str(e)}")
 
 # Promote Members
 
