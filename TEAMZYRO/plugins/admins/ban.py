@@ -2,7 +2,7 @@ import asyncio
 from contextlib import suppress
 
 from pyrogram.errors import PeerIdInvalid
-from pyrogram.types import Message, ChatMembersFilter
+from pyrogram.types import Message
 from pyrogram import Client, filters
 from pyrogram.enums import ChatMembersFilter, ChatMemberStatus, ChatType
 from pyrogram.types import (
@@ -154,10 +154,7 @@ async def kickFunc(_, message: Message):
 
 
 # Ban members
-
-@app.on_message(
-    filters.command(["ban", "sban", "tban"]) & ~filters.private & ~BANNED_USERS
-)
+@app.on_message(filters.command(["ban", "sban", "tban"]) & ~filters.private & ~BANNED_USERS)
 @adminsOnly("can_restrict_members")
 async def banFunc(_, message: Message):
     user_id, reason = await extract_user_and_reason(message, sender_chat=True)
@@ -171,42 +168,42 @@ async def banFunc(_, message: Message):
     if user_id in [
         member.user.id
         async for member in app.get_chat_members(
-            chat_id=message.chat.id, filter=ChatMembersFilter.ADMINISTRATORS
+            chat_id=message.chat.id, filter="administrators"
         )
     ]:
         return await message.reply_text(
             "I can't ban an admin. You know the rules, so do I."
         )
 
-    # Try to resolve the user
     try:
+        if isinstance(user_id, str) and user_id.startswith('@'):
+            user_id = user_id.lstrip('@')
         user = await app.get_users(user_id)
         mention = user.mention
     except PeerIdInvalid:
-        # Handle case where user_id is not resolvable
         await message.reply_text(
-            "Error: The user ID or username is invalid or hasn't interacted with the bot yet."
+            "Error: The user ID or username is invalid or hasn't interacted with the bot yet. "
+            "Ensure the user is in the chat or has messaged the bot."
         )
         return
+    except ValueError:
+        await message.reply_text("Error: Invalid user ID format.")
+        return
     except Exception as e:
-        # Handle other unexpected errors
         await message.reply_text(f"An error occurred while resolving the user: {str(e)}")
         return
 
-    # Construct the ban message
     msg = (
         f"**Banned User:** {mention}\n"
         f"**Banned By:** {message.from_user.mention if message.from_user else 'Anon'}\n"
-        f"**[ ](https://files.catbox.moe/m4rjwd.mp4)\n"
+        f"**[Video](https://files.catbox.moe/m4rjwd.mp4)\n"
     )
 
-    # Handle silent ban (sban)
     if message.command[0][0] == "s":
         if message.reply_to_message:
             await message.reply_to_message.delete()
         await app.delete_user_history(message.chat.id, user_id)
 
-    # Handle temporary ban (tban)
     if message.command[0] == "tban":
         split = reason.split(None, 1)
         time_value = split[0]
@@ -221,7 +218,7 @@ async def banFunc(_, message: Message):
                 replied_message = message.reply_to_message
                 if replied_message:
                     message = replied_message
-                await message.reply_text(msg)
+                await message.reply_text(msg, parse_mode="markdown")
             else:
                 await message.reply_text("You can't use more than 99")
             return
@@ -229,7 +226,6 @@ async def banFunc(_, message: Message):
             await message.reply_text(f"Error during temporary ban: {str(e)}")
             return
 
-    # Handle regular ban
     if reason:
         msg += f"**Reason:** {reason}"
     try:
@@ -237,12 +233,10 @@ async def banFunc(_, message: Message):
         replied_message = message.reply_to_message
         if replied_message:
             message = replied_message
-        await message.reply_text(msg)
+        await message.reply_text(msg, parse_mode="markdown")
     except Exception as e:
         await message.reply_text(f"Error banning user: {str(e)}")
 
-
-# Unban members
 @app.on_message(filters.command("unban") & ~filters.private & ~BANNED_USERS)
 @adminsOnly("can_restrict_members")
 async def unban_func(_, message: Message):
@@ -260,7 +254,7 @@ async def unban_func(_, message: Message):
         umention = user.mention
     except PeerIdInvalid:
         await message.reply_text(
-            "Error: The user ID or username is invalid or hasn't interacted with the bot yet. "
+            "Error: The user ID or username is invalid or isn't present their in this group. "
             "Ensure the user is known to the bot."
         )
         return
@@ -285,8 +279,8 @@ async def unban_func(_, message: Message):
     except Exception as e:
         await message.reply_text(f"Error sending unban message: {str(e)}")
 
-# Promote Members
 
+# Promote Members
 @app.on_message(
     filters.command(["promote", "fullpromote"]) & ~filters.private & ~BANNED_USERS
 )
