@@ -2,7 +2,7 @@ import asyncio
 from contextlib import suppress
 
 from pyrogram.errors import PeerIdInvalid
-from pyrogram.types import Message
+from pyrogram.types import Message, ChatPriviliges 
 from pyrogram import Client, filters
 from pyrogram.enums import ChatMembersFilter, ChatMemberStatus, ChatType
 from pyrogram.types import (
@@ -220,7 +220,7 @@ async def banFunc(_, message: Message):
                     message = replied_message
                 await message.reply_text(msg, parse_mode="markdown")
             else:
-                await message.reply_text("You can't use more than 99")
+                await message.reply_text("You can't use more than 99 minutes")
             return
         except Exception as e:
             await message.reply_text(f"Error during temporary ban: {str(e)}")
@@ -296,7 +296,7 @@ async def promoteFunc(_, message: Message):
     if not bot:
         return await message.reply_text("I'm not an admin in this chat.")
     if not bot.can_promote_members:
-        return await message.reply_text("I don't have enough permissions")
+        return await message.reply_text("I don't have enough permissions Kindly Provide Me Full Rights")
 
     umention = (await app.get_users(user_id)).mention
 
@@ -329,10 +329,65 @@ async def promoteFunc(_, message: Message):
             can_manage_video_chats=bot.can_manage_video_chats,
         ),
     )
-    await message.reply_text(f"Promoted! {umention}")
+    await message.reply_text(f"Promoted ✨! {umention}")
 
 
 # Demote Member
+@app.on_message(filters.command("demote") & ~filters.private & ~BANNED_USERS)
+@adminsOnly("can_promote_members")
+async def demoteFunc(_, message: Message):
+    user_id = await extract_user(message)
+
+    if not user_id:
+        return await message.reply_text("I can't find that user.")
+
+    bot = await app.get_chat_member(message.chat.id, app.id)
+    if not bot.privileges:
+        return await message.reply_text("I'm not an admin in this chat.")
+    if not bot.privileges.can_promote_members:
+        return await message.reply_text("I don't have enough permissions to demote users Provide me Full Rights.")
+
+    if user_id == app.id:
+        return await message.reply_text("I can't demote myself.")
+
+    try:
+        user = await app.get_users(user_id)
+        umention = user.mention
+    except PeerIdInvalid:
+        return await message.reply_text(
+            "Error: The user ID or username is invalid or hasn't interacted with the bot yet. "
+            "Ensure the user Might Be Not a Member of this Chat ."
+        )
+    except Exception as e:
+        return await message.reply_text(f"Error resolving user: {str(e)}")
+
+    try:
+        # Check if the user is an admin
+        member = await app.get_chat_member(message.chat.id, user_id)
+        if not member.privileges:
+            return await message.reply_text(f"{umention} You Are not an admin in this chat.")
+        
+        # Demote by setting all privileges to False
+        await message.chat.promote_member(
+            user_id=user_id,
+            privileges=ChatPrivileges(
+                can_change_info=False,
+                can_invite_users=False,
+                can_delete_messages=False,
+                can_restrict_members=False,
+                can_pin_messages=False,
+                can_promote_members=False,
+                can_manage_chat=False,
+                can_manage_video_chats=False,
+            )
+        )
+        
+        replied_message = message.reply_to_message
+        if replied_message:
+            message = replied_message
+        await message.reply_text(f"Demoted! {umention}", parse_mode="markdown")
+    except Exception as e:
+        await message.reply_text(f"User Was Might be promoted from Other Bot or Manually by Any Of Admins: {str(e)}")
 
 
 @app.on_message(filters.command("purge") & ~filters.private)
