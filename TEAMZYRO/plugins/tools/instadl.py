@@ -57,13 +57,13 @@ async def auto_reel_handler(client, message):
         return  # Ignore messages without Instagram URLs
 
     # Send processing message
-    processing = await message.reply("⏳ Downloading...")
+    processing = await message.reply("⏳ Dᴏᴡɴʟᴏᴀᴅɪɴɢ ɪɢ ʀᴇᴇʟs ᴘʟᴇᴀsᴇ ᴡᴀɪᴛ...")
 
     # Download media
     media_files, error = download_instagram_media(url)
 
     if error:
-        return await processing.edit(f"❌ Error: {error}")
+        return await processing.edit(f"❌ Eʀʀᴏʀ : {error}")
 
     # Group media in batches of 4
     group = []
@@ -78,7 +78,7 @@ async def auto_reel_handler(client, message):
             try:
                 await client.send_media_group(chat_id=message.chat.id, media=group)
             except Exception as e:
-                await message.reply(f"⚠️ Failed to send batch: {e}")
+                await message.reply(f"⚠️ Fᴀɪʟᴇᴅ ᴛᴏ sʜᴀʀᴇ ɪɴ ʙᴀᴛᴄʜ ᴛʀʏ ᴏɴᴇ ɪɢ ʀᴇᴇʟ ᴀᴛ ᴏɴᴄᴇ: {e}")
             group = []
 
     # Delete processing message
