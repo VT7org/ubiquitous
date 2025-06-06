@@ -1,7 +1,9 @@
 import asyncio
 from contextlib import suppress
 
-from pyrogram import filters
+from pyrogram.errors import PeerIdInvalid
+from pyrogram.types import Message, ChatMembersFilter
+from pyrogram import Client, filters
 from pyrogram.enums import ChatMembersFilter, ChatMemberStatus, ChatType
 from pyrogram.types import (
     CallbackQuery,
@@ -153,7 +155,6 @@ async def kickFunc(_, message: Message):
 
 # Ban members
 
-
 @app.on_message(
     filters.command(["ban", "sban", "tban"]) & ~filters.private & ~BANNED_USERS
 )
@@ -164,9 +165,9 @@ async def banFunc(_, message: Message):
     if not user_id:
         return await message.reply_text("I can't find that user.")
     if user_id == app.id:
-        return await message.reply_text("I can't ban myself, i can leave if you want.")
+        return await message.reply_text("I can't ban myself, I can leave if you want.")
     if user_id in SUDOERS:
-        return await message.reply_text("You Wanna Ban The Elevated One?, RECONSIDER!")
+        return await message.reply_text("You wanna ban the elevated one? RECONSIDER!")
     if user_id in [
         member.user.id
         async for member in app.get_chat_members(
@@ -174,35 +175,47 @@ async def banFunc(_, message: Message):
         )
     ]:
         return await message.reply_text(
-            "I can't ban an admin, You know the rules, so do i."
+            "I can't ban an admin. You know the rules, so do I."
         )
 
+    # Try to resolve the user
     try:
-        mention = (await app.get_users(user_id)).mention
-    except IndexError:
-        mention = (
-            message.reply_to_message.sender_chat.title
-            if message.reply_to_message
-            else "Anon"
+        user = await app.get_users(user_id)
+        mention = user.mention
+    except PeerIdInvalid:
+        # Handle case where user_id is not resolvable
+        await message.reply_text(
+            "Error: The user ID or username is invalid or hasn't interacted with the bot yet."
         )
+        return
+    except Exception as e:
+        # Handle other unexpected errors
+        await message.reply_text(f"An error occurred while resolving the user: {str(e)}")
+        return
 
+    # Construct the ban message
     msg = (
         f"**Banned User:** {mention}\n"
         f"**Banned By:** {message.from_user.mention if message.from_user else 'Anon'}\n"
         f"**[ ](https://files.catbox.moe/m4rjwd.mp4)\n"
     )
+
+    # Handle silent ban (sban)
     if message.command[0][0] == "s":
-        await message.reply_to_message.delete()
+        if message.reply_to_message:
+            await message.reply_to_message.delete()
         await app.delete_user_history(message.chat.id, user_id)
+
+    # Handle temporary ban (tban)
     if message.command[0] == "tban":
         split = reason.split(None, 1)
         time_value = split[0]
         temp_reason = split[1] if len(split) > 1 else ""
-        temp_ban = await time_converter(message, time_value)
-        msg += f"**Banned For:** {time_value}\n"
-        if temp_reason:
-            msg += f"**Reason:** {temp_reason}"
-        with suppress(AttributeError):
+        try:
+            temp_ban = await time_converter(message, time_value)
+            msg += f"**Banned For:** {time_value}\n"
+            if temp_reason:
+                msg += f"**Reason:** {temp_reason}"
             if len(time_value[:-1]) < 3:
                 await message.chat.ban_member(user_id, until_date=temp_ban)
                 replied_message = message.reply_to_message
@@ -211,19 +224,25 @@ async def banFunc(_, message: Message):
                 await message.reply_text(msg)
             else:
                 await message.reply_text("You can't use more than 99")
-        return
+            return
+        except Exception as e:
+            await message.reply_text(f"Error during temporary ban: {str(e)}")
+            return
+
+    # Handle regular ban
     if reason:
         msg += f"**Reason:** {reason}"
-    await message.chat.ban_member(user_id)
-    replied_message = message.reply_to_message
-    if replied_message:
-        message = replied_message
-    await message.reply_text(msg)
+    try:
+        await message.chat.ban_member(user_id)
+        replied_message = message.reply_to_message
+        if replied_message:
+            message = replied_message
+        await message.reply_text(msg)
+    except Exception as e:
+        await message.reply_text(f"Error banning user: {str(e)}")
 
 
 # Unban members
-
-
 @app.on_message(filters.command("unban") & ~filters.private & ~BANNED_USERS)
 @adminsOnly("can_restrict_members")
 async def unban_func(_, message: Message):
@@ -248,7 +267,6 @@ async def unban_func(_, message: Message):
 
 
 # Promote Members
-
 
 @app.on_message(
     filters.command(["promote", "fullpromote"]) & ~filters.private & ~BANNED_USERS
