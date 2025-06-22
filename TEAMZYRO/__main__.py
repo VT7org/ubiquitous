@@ -2,7 +2,6 @@ import asyncio
 import importlib
 import logging
 from pyrogram import Client, idle
-from pyrogram.errors import ValueError
 from pytgcalls.exceptions import NoActiveGroupCall
 
 import config
