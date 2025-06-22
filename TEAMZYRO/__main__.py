@@ -1,7 +1,8 @@
 import asyncio
 import importlib
-
-from pyrogram import idle
+import logging
+from pyrogram import Client, idle
+from pyrogram.errors import ValueError
 from pytgcalls.exceptions import NoActiveGroupCall
 
 import config
@@ -12,6 +13,22 @@ from TEAMZYRO.plugins import ALL_MODULES
 from TEAMZYRO.utils.database import get_banned_users, get_gbanned
 from config import BANNED_USERS
 
+# Configure logging
+logging.basicConfig(level=logging.WARNING, format='%(asctime)s - %(levelname)s - %(message)s')
+
+# Monkey-patch Pyrogram's handle_updates to catch invalid peer ID errors
+original_handle_updates = Client.handle_updates
+
+async def custom_handle_updates(self, update):
+    try:
+        await original_handle_updates(self, update)
+    except ValueError as e:
+        if "Peer id invalid" in str(e):
+            LOGGER(__name__).warning(f"Ignoring invalid peer ID: {e}")
+        else:
+            raise
+
+Client.handle_updates = custom_handle_updates
 
 async def init():
     if (
@@ -21,7 +38,7 @@ async def init():
         and not config.STRING4
         and not config.STRING5
     ):
-        LOGGER(__name__).error("String Session is Missing , Please fill 𝐀 PyrogramV2 Session")
+        LOGGER(__name__).error("String Session is Missing, Please fill 𝐀 PyrogramV2 Session")
         exit()
     await sudo()
     try:
@@ -56,7 +73,6 @@ async def init():
     await app.stop()
     await userbot.stop()
     LOGGER("TEAMZYRO").info("sᴘᴀᴄᴇ-x sᴛᴏᴘᴘᴇᴅ sᴜᴄᴄᴇssғᴜʟʟʏ...")
-
 
 if __name__ == "__main__":
     asyncio.get_event_loop().run_until_complete(init())
