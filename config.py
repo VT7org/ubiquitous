@@ -9,14 +9,14 @@ from pyrogram import filters
 load_dotenv()
 # ------------------------------------
 # -----------------------------------------------------
-API_ID = getenv("API_ID", "")
-API_HASH = getenv("API_HASH", "")
+API_ID = getenv("API_ID", "18136872")
+API_HASH = getenv("API_HASH", "312d861b78efcd1b02183b2ab52a83a4")
 
 EVAL = list(map(int, getenv("EVAL", "0000000 0000000").split()))
 # ------------------------------------------------------
 BOT_TOKEN = getenv("BOT_TOKEN", "")
 # --------------------------------------------------------
-BOT_USERNAME = getenv("BOT_USERNAME" , "")
+BOT_USERNAME = getenv("BOT_USERNAME" , "BillaProBot")
 # --------------------------------------------------------
 
 #---------------------------------------------------------------
