@@ -21,7 +21,7 @@ async def init():
         and not config.STRING4
         and not config.STRING5
     ):
-        LOGGER(__name__).error("𝐒𝐭𝐫𝐢𝐧𝐠 𝐒𝐞𝐬𝐬𝐢𝐨𝐧 𝐍𝐨𝐭 𝐅𝐢𝐥𝐥𝐞𝐝, 𝐏𝐥𝐞𝐚𝐬𝐞 𝐅𝐢𝐥𝐥 𝐀 𝐏𝐲𝐫𝐨𝐠𝐫𝐚𝐦 𝐒𝐞𝐬𝐬𝐢𝐨𝐧")
+        LOGGER(__name__).error("String Session is Missing , Please fill 𝐀 PyrogramV2 Session")
         exit()
     await sudo()
     try:
@@ -36,26 +36,26 @@ async def init():
     await app.start()
     for all_module in ALL_MODULES:
         importlib.import_module("TEAMZYRO.plugins" + all_module)
-    LOGGER("TEAMZYRO.plugins").info("𝐀𝐥𝐥 𝐅𝐞𝐚𝐭𝐮𝐫𝐞𝐬 𝐋𝐨𝐚𝐝𝐞𝐝 𝐁𝐚𝐛𝐲🥳...")
+    LOGGER("TEAMZYRO.plugins").info("All Plugins Loaded Successfully 🍃...")
     await userbot.start()
     await ZYRO.start()
     try:
         await ZYRO.stream_call("https://te.legra.ph/file/29f784eb49d230ab62e9e.mp4")
     except NoActiveGroupCall:
         LOGGER("TEAMZYRO").error(
-            "𝗣𝗹𝗭 𝗦𝗧𝗔𝗥𝗧 𝗬𝗢𝗨𝗥 𝗟𝗢𝗚 𝗚𝗥𝗢𝗨𝗣 𝗩𝗢𝗜𝗖𝗘𝗖𝗛𝗔𝗧\𝗖𝗛𝗔𝗡𝗡𝗘𝗟\n\nZYRO 𝗕𝗢𝗧 𝗦𝗧𝗢𝗣........"
+            "Please Start Videochat In Logger Gc\n\nZYRO start the VC & Restart the Music Bot........"
         )
         exit()
     except:
         pass
     await ZYRO.decorators()
     LOGGER("TEAMZYRO").info(
-        "╔═════ஜ۩۞۩ஜ════╗\n  ☠︎︎𝗠𝗔𝗗𝗘 𝗕𝗬 𝗠𝗥 ZYRO☠︎︎\n╚═════ஜ۩۞۩ஜ════╝"
+        "✯\n ᴄᴏ-ᴘᴏᴡᴇʀᴇᴅ ʙʏ\n @BillaSpace"
     )
     await idle()
     await app.stop()
     await userbot.stop()
-    LOGGER("TEAMZYRO").info("𝗦𝗧𝗢𝗣 ZYRO 𝗠𝗨𝗦𝗜𝗖🎻 𝗕𝗢𝗧..")
+    LOGGER("TEAMZYRO").info("sᴘᴀᴄᴇ-x sᴛᴏᴘᴘᴇᴅ sᴜᴄᴄᴇssғᴜʟʟʏ...")
 
 
 if __name__ == "__main__":
