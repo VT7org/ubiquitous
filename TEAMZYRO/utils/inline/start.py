@@ -3,7 +3,6 @@ from pyrogram.types import InlineKeyboardButton
 import config
 from TEAMZYRO import app
 
-
 def start_panel(_):
     buttons = [
         [
@@ -15,7 +14,6 @@ def start_panel(_):
     ]
     return buttons
 
-
 def private_panel(_):
     buttons = [
         [
@@ -25,7 +23,6 @@ def private_panel(_):
             )
         ],
         [
-            InlineKeyboardButton(text=_["S_B_5"], user_id=config.OWNER_ID),
             InlineKeyboardButton(text=_["S_B_6"], url=config.SUPPORT_CHANNEL),
         ],
         [
